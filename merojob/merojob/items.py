@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-
 # Define here the models for your scraped items
 #
 # See documentation in:
@@ -25,4 +24,8 @@ class MerojobItem(scrapy.Item):
     uj_company =scrapy.Field()
     uj_job_title = scrapy.Field()
     uj_deadline = scrapy.Field()
+
+    kaj_company = scrapy.Field()
+    kaj_job_title = scrapy.Field()
+    kaj_deadline = scrapy.Field()
     pass

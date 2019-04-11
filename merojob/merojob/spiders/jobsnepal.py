@@ -6,7 +6,9 @@ from ..items import MerojobItem
 
 class JobsnepalSpider(scrapy.Spider):
     name = 'jobsnepal'
-    start_urls = ['https://www.jobsnepal.com/']
+    page_number =2
+    start_urls = ['https://www.jobsnepal.com/premium-listings']
+
 
     def parse(self, response):
         items = MerojobItem()
@@ -16,14 +18,22 @@ class JobsnepalSpider(scrapy.Spider):
         for i in jn_company:
            j = re.sub(r"\s+\s+", "", i)
            t_jn_company.append(j)
-           print(t_jn_company)
+
         jn_job_title = response.css('.joblist::text').extract()
         for i in jn_job_title:
             j = re.sub(r"\s+\s+", "", i)
             t_jn_job_title.append(j)
-            print(t_jn_job_title)
+
         jn_deadline = response.css('#main-content span::text').extract()
         items['jn_company'] = t_jn_company
         items['jn_job_title'] = t_jn_job_title
         items['jn_deadline'] = jn_deadline
         yield items
+
+        next_page ='https://www.jobsnepal.com/premium-listings/page-'+str(JobsnepalSpider.page_number)
+        print(next_page)
+
+        if JobsnepalSpider.page_number <= 100:
+            print(JobsnepalSpider.page_number)
+            JobsnepalSpider.page_number +=1
+            yield response.follow(next_page, callback = self.parse)

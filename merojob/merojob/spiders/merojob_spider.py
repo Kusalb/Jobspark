@@ -33,5 +33,5 @@ class MerojobSpiderSpider(scrapy.Spider):
         items['company_vacancy'] = f_comp_vacancy
         items['imagelink'] = imagelink
         # items['job'] = job
-        print(company_name)
+        # print(company_name)
         yield items
